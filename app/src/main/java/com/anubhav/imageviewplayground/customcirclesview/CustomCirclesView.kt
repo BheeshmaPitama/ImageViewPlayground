@@ -1,9 +1,12 @@
 package com.anubhav.imageviewplayground.customcirclesview
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BitmapShader
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.Shader
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
@@ -16,6 +19,7 @@ import com.anubhav.imageviewplayground.R
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import kotlin.math.min
 
 class ImageCirclesView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
@@ -96,6 +100,7 @@ class ImageCirclesView(context: Context, attrs: AttributeSet) : View(context, at
         }
     }
 
+    @SuppressLint("DrawAllocation")
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
@@ -106,7 +111,22 @@ class ImageCirclesView(context: Context, attrs: AttributeSet) : View(context, at
         // Use centerY for both circles
         val centerY = height / 2f
 
-        // Drawing as circles
+        leftBitmap?.let {
+            val squareBitmap = getCentralSquareBitmap(it)
+            bitmapPaint.isAntiAlias = true
+            val shader = BitmapShader(squareBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
+            bitmapPaint.shader = shader
+            canvas.drawCircle(leftCircleX, centerY, radius, bitmapPaint)
+        }
+
+        rightBitmap?.let {
+            val squareBitmap = getCentralSquareBitmap(it)
+            bitmapPaint.isAntiAlias = true
+            val shader = BitmapShader(squareBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
+            bitmapPaint.shader = shader
+            canvas.drawCircle(rightCircleX, centerY, radius, bitmapPaint)
+        } // Drawing as circles
+
         leftBitmap?.let {
             val bitmapX = leftCircleX - it.width / 2
             val bitmapY = centerY - it.height / 2
@@ -122,7 +142,11 @@ class ImageCirclesView(context: Context, attrs: AttributeSet) : View(context, at
         }
     }
 
-    private fun scaleBitmapToSize(bitmap: Bitmap, size: Int): Bitmap {
-        return Bitmap.createScaledBitmap(bitmap, size, size, true)
+    private fun getCentralSquareBitmap(original: Bitmap): Bitmap {
+        val dimension = min(original.width, original.height)
+        val xOffset = (original.width - dimension) / 2
+        val yOffset = (original.height - dimension) / 2
+
+        return Bitmap.createBitmap(original, xOffset, yOffset, dimension, dimension)
     }
 }

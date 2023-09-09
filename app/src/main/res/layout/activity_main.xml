@@ -15,8 +15,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:leftImageUrl="https://source.unsplash.com/featured/300x201"
         app:rightImageUrl="https://source.unsplash.com/featured/300x202"
-        app:radius="100dp"
-        app:imageLibrary="glide"
+        app:radius="50dp"
+        app:imageLibrary="coil"
         />
 
 
