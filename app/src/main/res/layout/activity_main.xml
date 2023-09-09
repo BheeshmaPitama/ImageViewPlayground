@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <com.anubhav.imageviewplayground.customcirclesview.ImageCirclesView
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:leftImageUrl="https://source.unsplash.com/featured/300x201"
+        app:rightImageUrl="https://source.unsplash.com/featured/300x202"
+        app:radius="100dp"
+        app:imageLibrary="glide"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
